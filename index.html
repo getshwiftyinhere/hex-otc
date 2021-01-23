@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=698">
+  <title>HEXOTC | Over-the-counter HEX/ETH market P2P trading platform.</title>
+  <meta name="keywords" content="hex, hex whale, hex otc, hex over the counter, hex crypto, hex eth">
+  <meta name="description" content="HEXOTC allows for easy P2P exchange between HEX/ETH.">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="lib/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="lib/animate/animate.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/toggle.css">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+
+<body>
+
+  <section id="nav-bar">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="#">
+        <div class="navTitle"><img src="images/hex-logo.png" alt="HEX logo"><i
+            style="text-shadow:0px 0px 5px black; position: relative; transform: translate(-50px,0px)"
+            class="fa fa-handshake"></i><span style="margin-left:-45px;"><b>HEX</b>OTC</span></div>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fa fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href=".">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://hex.win/?r=0xB1A7Fe276cA916d8e7349Fa78ef805F64705331E" target="_blank">HEX
+              Website</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://hexviz.xyz" target="_blank">HEX Visualizer</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://hexpool.win/?r=0xFeDc84d0cd5FE6dB2B2f8aC31c7e31e49B665e5c" target="_blank">HEX Pool</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://t.me/hexcrypto" target="_blank">HEX Social</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </section>
+
+  <section class="banner">
+    <div id="menu" class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p class="promo-title"><b>HEX</b>OTC</p>
+          <p class="join-title">Over-the-counter P2P market for HEX/ETH</p>
+          <a href="#" class="link-play" onclick="ShowMarket(0)">
+            <img src="svg/play.svg" alt="" class="play-btn">Get Started
+          </a>
+        </div>
+        <div class="col-md-6">
+          <img src="svg/hex-promo.svg" alt="HEX OTC promo" class="img-fluid" />
+        </div>
+      </div>
+    </div>
+    <div id="main" class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <a style="position:absolute;" href="#" class="link-play" onclick="ShowMarket(1)">
+            <img style="transform:scaleX(-1)" src="svg/play.svg" alt="" class="play-btn">Back
+          </a>
+          <p class="promo-title">Make an offer&nbsp;<i style="transform: translate(0px,-5px);"
+              class="fa fa-hand-holding"></i></p>
+          <p class="join-title">I want to...</p>
+          <div>
+            <b id="successMsg"></b>
+            <b id="errorMsg"></b>
+            <div id="orderForm">
+              <form class="toggle" class="orderTypes">
+                <input type="radio" id="buyRadio" name="escrowType" value="1">
+                <label id="buyLabel" for="buyRadio">BUY</label>
+                <input type="radio" id="sellRadio" name="escrowType" value="0">
+                <label id="sellLabel" for="sellRadio">SELL</label>
+                <div id="flap"><b class="content"></b></div>
+              </form>
+              <br />
+              <img style="width:35px; transform: translateY(-5px);" src="images/hex-logo.png" /> <b style="font-size:22px;">HEX</b>
+              <input id="hexInput" onchange="UpdateRate()" class="form-control" type="number" min="0"
+                placeholder="Amount" />
+              <br />
+              <b>for</b>
+              <br />
+              <i style="color:black; width:35px;" class="fab fa-2x fa-ethereum text-center"></i> <b style="font-size:22px;">ETH</b>
+              <input id="ethInput" onchange="UpdateRate()" class="form-control" type="number" min="0"
+                placeholder="Amount" />
+              @ Rate: <span id="rate">N/A</span><span style="font-size:12px;">&nbsp;HEX/ETH</span><br />
+              <a href="#" class="link-play" onclick="MakeOffer()">
+                <img src="svg/play.svg" alt="" class="play-btn playBtn"><b class="makeOffer">MAKE OFFER</b>
+              </a>
+            </div>
+            <p><span id="orderInfo">Information about your offer will appear here.</span><br />Your wallet address:
+              <span class="addressBreak" id="userAddress">N/A</span>
+              <br/>HEX balance: <span style="font-weight: 700;" id="userHexBalance">0</span>
+              <br/>ETH balance: <span style="font-weight: 700;" id="userEthBalance">0</span>
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <br/>
+            <button id="approveBtn" class="approveBtn" onclick="ApproveHex()">Approve HEX</button>
+            &nbsp;<b>HEX Approved: <span id="approvedHex">0</span></b><img src="images/hex-logo.png" style="width:18px; transform: translateY(-2.5px);"/>
+            <br/><br/>
+            <a href="#tornadoCash"><button id="approveBtn" class="approveBtn" onclick="ShowTornado()">Anonymous ETH<i class="fa fa-2x fa-ninja"></i></button></a>
+          <img src="svg/savings.svg" alt="HEX OTC promo" class="img-fluid" />
+        </div>
+      </div>
+      <div class="text-center"><a href="#about"><span class="openOffers"><b>OPEN OFFERS</b></span><br /><br /><i
+            data-wow-iteration="infinite" class="wow bounce fa fa-4x fa-chevron-down"></i></a></div>
+    </div>
+    <img src="images/ground@-min.png" class="bottom-img" alt="">
+  </section>
+
+  <section id="about">
+    <div id="menuAbout" class="container">
+      <h3 class="title text-center"><b>ABOUT</b></h3>
+      <div class="row">
+        <div class="col-md-6 about">
+          <br/>
+          <p class="about-title"><b>HEX</b>OTC allows for P2P, decentralized and zero-fee trading.</p>
+          <ul>
+            <li>Buy and sell HEX over-the-counter, set your rate and get the best price!</li>
+            <li>Trade P2P to avoid market slippage via the <b>HEX</b>OTC smart-contract.</li>
+            <li>Make an offer, await a taker or cancel it anytime.</li>
+            <li>Check out any open offers and make your trade instantly.</li>
+            <li>Secure trustless escrow system - offers are held in the <b>HEX</b>OTC smart-contract until cancelled or taken.</li>
+            <li>Zero-fees, simply pay gas to mine your transaction on the Ethereum network.</li>
+            <li>Built for HEX, Powered by Ethereum.</li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <img src="svg/hex-mobile.svg" class="img-fluid" alt="HEX info vector">
+        </div>
+      </div>
+    </div>
+    <b id="takeSuccessMsg"></b>
+    <b id="takeErrorMsg"></b>
+    <div id="mainMarket" class="container" style="width:100%; max-width:1900px">
+      <h3 class="title text-center"><b>MARKET</b></h3>
+      <h4 class="about-title"><i onclick="ShowMarket(3)" class="fa fa-chevron-left"></i>&nbsp;
+      <span id="offersTitle">OPEN OFFERS</span>&nbsp;
+      <i onclick="ShowMarket(2)" class="fa fa-chevron-right"></i></h4>
+      <br />
+      <i><i style="color:green" class="fa fa-info-circle"></i>&nbsp;Real-time events, table sorting and rate search capabilities in development.</i><br/>
+      <div class="row">
+
+        <div id="hexTake">
+          <i style="position: absolute; top:2px; left:2px; width:35px; height:35px; z-index: 100; cursor:pointer;"
+            class="fa fa-2x fa-times" onclick="HideTakeInput()"></i>
+          <h3 class="text-center"><b>TAKE OFFER?</b></h3>
+          <img src="images/hex-logo.png" style="width:50px" /><br /><br />
+          <input id="hexTakeInput" onchange="ShowTakeInfo()" class="form-control" type="number" min="0"
+            placeholder="HEX Amount" />
+          <br />
+          <button class="takeBtn btn-primary" type="button" onclick="TakeOffer(0)">TAKE <i
+              class="fa fa-handshake"></i></button>
+          <button class="takeBtn btn-primary" type="button" onclick="TakeOffer(1)"><i class="fa fa-handshake"></i> TAKE
+            ALL</button>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="tableCont">
+            <h5 class="marketTitle"><b>HEX<span style="font-weight: 500">OTC</span> BIDS<span
+                  style="color:green; font-size:14px;">/BUYERS</span></b></h5>
+            <span><i class="fab fa-ethereum"></i>&nbsp;Escrow Balance: </span><span id="ethBalance"
+              class="contractBalances"></span><br /><br />
+            <div class="marketCont">
+              <table class="table table-striped" id="buyTable">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">MAKER</th>
+                    <th style="min-width:110px" scope="col"><span><img style="width:15px"
+                          src="images/hex-logo.png" />HEX<b style="font-size:12px">/ASK</b></span></th>
+                    <th style="min-width:100px" scope="col"><span><i class="fab fa-ethereum"></i>ETH<b
+                          style="font-size:12px">/BID</b></span></th>
+                    <th scope="col">RATE <b style="font-size:12px">HEX/ETH</b></th>
+                    <th style="min-width: 100px;" scope="col"><i class="fa fa-clock"></i></th>
+                    <th scope="col">TAKE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="tableCont">
+            <h5 class="marketTitle"><b>HEX<span style="font-weight: 500">OTC</span> ASKS<span
+                  style="color:red; font-size:14px;">/SELLERS</span></b></h5>
+            <span><img style="width:15px" src="images/hex-logo.png" />&nbsp;Escrow Balance: </span><span id="hexBalance"
+              class="contractBalances"></span><br /><br />
+            <div class="marketCont">
+              <table class="table table-striped" id="sellTable">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">MAKER</th>
+                    <th style="min-width:100px" scope="col"><span><i class="fab fa-ethereum"></i>ETH<b
+                          style="font-size:12px">/ASK</b></span></th>
+                    <th style="min-width:110px" scope="col"><span><img style="width:15px"
+                          src="images/hex-logo.png" />HEX<b style="font-size:12px">/BID</b></span></th>
+                    <th scope="col">RATE <b style="font-size:12px">HEX/ETH</b></th>
+                    <th style="min-width: 100px;" scope="col"><i class="fa fa-clock"></i></th>
+                    <th scope="col">TAKE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="myMarket" class="container" style="width:100%; max-width:1900px;">
+      <h3 class="title text-center"><b>PERSONAL MARKET</b></h3>
+      <h4 class="about-title"><i onclick="ShowMarket(4)" class="fa fa-chevron-left"></i>&nbsp;<span id="offersTitle">MY
+          OFFERS</span></h4>
+      <br />
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <div class="tableCont">
+            <h5 class="marketTitle"><b>HEX<span style="font-weight: 500">OTC</span> BIDS<span
+                  style="color:green; font-size:14px;">/BUYING</span></b></h5>
+            <span><i class="fab fa-ethereum"></i>&nbsp;Escrow Balance: </span><span id="myEthBalance"
+              class="contractBalances"></span><br /><br />
+            <div class="marketCont">
+              <table class="table table-striped" id="myBuyTable">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">MAKER</th>
+                    <th style="min-width:110px" scope="col"><span><img style="width:15px"
+                          src="images/hex-logo.png" />HEX<b style="font-size:12px">/ASK</b></span></th>
+                    <th style="min-width:100px" scope="col"><span><i class="fab fa-ethereum"></i>ETH<b
+                          style="font-size:12px">/BID</b></span></th>
+                    <th scope="col">RATE <b style="font-size:12px">HEX/ETH</b></th>
+                    <th style="min-width: 100px;" scope="col"><i class="fa fa-clock"></i></th>
+                    <th scope="col">CANCEL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="tableCont">
+            <h5 class="marketTitle"><b>HEX<span style="font-weight: 500">OTC</span> ASKS<span
+                  style="color:red; font-size:14px;">/SELLING</span></b></h5>
+            <span><img style="width:15px" src="images/hex-logo.png" />&nbsp;Escrow Balance: </span><span
+              id="myHexBalance" class="contractBalances"></span><br /><br />
+            <div class="marketCont">
+              <table class="table table-striped" id="mySellTable">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">MAKER</th>
+                    <th style="min-width:100px" scope="col"><span><i class="fab fa-ethereum"></i>ETH<b
+                          style="font-size:12px">/ASK</b></span></th>
+                    <th style="min-width:110px" scope="col"><span><img style="width:15px"
+                          src="images/hex-logo.png" />HEX<b style="font-size:12px">/BID</b></span></th>
+                    <th scope="col">RATE <b style="font-size:12px">HEX/ETH</b></th>
+                    <th style="min-width: 100px;" scope="col"><i class="fa fa-clock"></i></th>
+                    <th scope="col">CANCEL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="closedMarket" class="container" style="width:100%; max-width:1900px;">
+      <h3 class="title text-center"><b>CLOSED MARKET</b></h3>
+      <h4 class="about-title"><span id="offersTitle">CLOSED TRADES</span>&nbsp;<i onclick="ShowMarket(4)"
+          class="fa fa-chevron-right"></i></h4>
+      <br />
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <div class="tableCont">
+            <h5 class="marketTitle"><b>HEX<span style="font-weight: 500">OTC</span> BIDS<span
+                  style="color:green; font-size:14px;">/BOUGHT</span></b></h5>
+            <span><i class="fab fa-ethereum"></i>&nbsp;Total Volume: </span><span id="closedEthBalance"
+              class="contractBalances"></span><br /><br />
+            <div class="marketCont">
+              <table class="table table-striped" id="closedBuyTable">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">MAKER</th>
+                    <th scope="col">TAKER</th>
+                    <th style="min-width:110px" scope="col"><span><img style="width:15px"
+                          src="images/hex-logo.png" />HEX<b style="font-size:12px">/ASK</b></span></th>
+                    <th style="min-width:100px" scope="col"><span><i class="fab fa-ethereum"></i>ETH<b
+                          style="font-size:12px">/BID</b></span></th>
+                    <th scope="col">RATE <b style="font-size:12px">HEX/ETH</b></th>
+                    <th style="min-width: 100px;" scope="col"><i class="fa fa-clock"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <div class="tableCont">
+            <h5 class="marketTitle"><b>HEX<span style="font-weight: 500">OTC</span> ASKS<span
+                  style="color:red; font-size:14px;">/SOLD</span></b></h5>
+            <span><img style="width:15px" src="images/hex-logo.png" />&nbsp;Total Volume: </span><span
+              id="closedHexBalance" class="contractBalances"></span><br /><br />
+            <div class="marketCont">
+              <table class="table table-striped" id="closedSellTable">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">MAKER</th>
+                    <th scope="col">TAKER</th>
+                    <th style="min-width:100px" scope="col"><span><i class="fab fa-ethereum"></i>ETH<b
+                          style="font-size:12px">/ASK</b></span></th>
+                    <th style="min-width:110px" scope="col"><span><img style="width:15px"
+                          src="images/hex-logo.png" />HEX<b style="font-size:12px">/BID</b></span></th>
+                    <th scope="col">RATE <b style="font-size:12px">HEX/ETH</b></th>
+                    <th style="min-width: 100px;" scope="col"><i class="fa fa-clock"></i></th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="tornadoCash">
+    
+  </section>
+  <section id="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-4 footer-box">
+          <div id="social" class="text-left">
+            <p>Learn More About HEX</p>
+            <div class="social-icons">
+              <a href="https://hex.win/?r=0xB1A7Fe276cA916d8e7349Fa78ef805F64705331E" target="_blank"><i
+                  class="fa fa-link"></i></a>
+              <a href="https://app.uniswap.org/#/swap?outputCurrency=0x2b591e99afe9f32eaa6214f7b7629768c40eeb39" target="_blank"><i
+                  class="fa fa-wallet"></i></a>
+              <a href="https://hexviz.xyz" target="_blank"><i class="fa fa-eye"></i></a>
+              <a href="https://t.me/hexcrypto" target="_blank"><i class="fab fa-2x fa-telegram"></i></a>
+            </div>
+            <div class="text-left">
+              <p style="font-size:22px;" class="copyright">
+                <a href="https://app.uniswap.org/#/swap?outputCurrency=0x2b591e99afe9f32eaa6214f7b7629768c40eeb39" target="_blank">Buy
+                  HEX</a><br /><br />
+                <a href="https://go.hex.win/stake/?r=0xB1A7Fe276cA916d8e7349Fa78ef805F64705331E" target="_blank">Stake
+                  HEX</a><br /><br />
+                <a href="https://hex.win/?r=0xB1A7Fe276cA916d8e7349Fa78ef805F64705331E" target="_blank">Learn
+                  HEX</a><br /><br />
+                <a href="https://hexviz.xyz" target="_blank">Watch HEX</a><br /><br />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-md-8 footer-box">
+          <br />
+          <img style="float:right; width:25px;" src="images/hex-logo.png" alt="">
+          <p class="text-right copyright"><b>HEX</b>OTC is a community made project | Made for the whales.<br /><br />
+            See the verified <b>HEX</b>OTC smart-contract <a
+              href="https://etherscan.io/address/0x204B937FEaEc333E9e6d72D35f1D131f187ECeA1"
+              target="_blank"><b>here on etherscan</b></a>
+            <br /><br />
+            Donations would be HEXcellent @ <span class="addressBreak">0xFeDc84d0cd5FE6dB2B2f8aC31c7e31e49B665e5c</span>
+          </p>
+          <div class="row text-right float-right">
+            <div class="col-12">
+              <input class="form-control text-right" type="number" id="ethDonate" name="donateEthValue"
+                placeholder="ETH Amount" min="0" step="0.1"></input>
+            </div>
+            <div class="col-12 text-right">
+              <button class="takeBtn btn-primary" onclick="DonateEth()">Donate ETH</button><br /><br />
+            </div>
+            <div class="col-12">
+              <input class="form-control text-right" type="number" id="hexDonate" name="donateHexValue"
+                placeholder="HEX Amount" min="0" step="10000"></input>
+            </div>
+            <div class="col-12 text-right">
+              <button class="takeBtn btn-primary" onclick="DonateHex()">Donate HEX</button><br /><br />
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+    </div>
+  </section>
+  <script type="text/javascript" src="js/web3.min.js"></script>
+  <script type="text/javascript" src="js/web3Connectv1.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/radioToggle.js"></script>
+  <!--lib-->
+  <script type="text/javascript" src="lib/wow/wow.min.js"></script>
+  <script type="text/javascript" src="lib/smooth-scroll.js"></script>
+
+  <script>
+    new WOW().init();
+    var scroll = new SmoothScroll('a[href*="#"]');
+  </script>
+</body>
+
+</html>
